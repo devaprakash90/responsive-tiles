@@ -1,7 +1,13 @@
 export interface KPI {
   id: string;
-  label: string;
+  title: string;
   value: number;
+  change: number;
+  timeframe: string;
+  icon: 'activity' | 'bar-chart' | 'trending-up' | string;
+  
+  // Keep the old properties for backward compatibility
+  label: string;
   trend: 'up' | 'down' | 'stable';
   trendValue: number;
 }
@@ -21,30 +27,80 @@ export interface Job {
   name: string;
   description: string;
   schedule: string;
-  status: 'active' | 'inactive';
+  status: 'active' | 'paused' | 'failed' | 'inactive';
   lastRun: string;
   nextRun: string;
+  createdBy: string;
+  createdAt: string;
 }
+
+// Add the getChartData function
+export const getChartData = () => {
+  return {
+    barChart: [
+      { name: 'Mon', value: 120 },
+      { name: 'Tue', value: 90 },
+      { name: 'Wed', value: 150 },
+      { name: 'Thu', value: 85 },
+      { name: 'Fri', value: 110 },
+      { name: 'Sat', value: 70 },
+      { name: 'Sun', value: 60 },
+    ],
+    lineChart: [
+      { name: 'Jan', value: 95 },
+      { name: 'Feb', value: 97 },
+      { name: 'Mar', value: 94 },
+      { name: 'Apr', value: 98 },
+      { name: 'May', value: 99 },
+      { name: 'Jun', value: 96 },
+    ],
+    pieChart: [
+      { name: 'Login', value: 35 },
+      { name: 'Logout', value: 25 },
+      { name: 'API', value: 20 },
+      { name: 'Error', value: 15 },
+      { name: 'Other', value: 5 },
+    ],
+  };
+};
 
 export const kpiData: KPI[] = [
   {
     id: 'kpi-1',
-    label: 'Total Events',
+    title: 'Total Events',
     value: 12345,
+    change: 12,
+    timeframe: 'vs last week',
+    icon: 'activity',
+    
+    // Keep old properties
+    label: 'Total Events',
     trend: 'up',
     trendValue: 12,
   },
   {
     id: 'kpi-2',
-    label: 'Unique Users',
+    title: 'Unique Users',
     value: 500,
+    change: 0,
+    timeframe: 'vs last week',
+    icon: 'bar-chart',
+    
+    // Keep old properties
+    label: 'Unique Users',
     trend: 'stable',
     trendValue: 0,
   },
   {
     id: 'kpi-3',
-    label: 'Error Rate',
+    title: 'Error Rate',
     value: 0.5,
+    change: -0.1,
+    timeframe: 'vs last week',
+    icon: 'trending-down',
+    
+    // Keep old properties
+    label: 'Error Rate',
     trend: 'down',
     trendValue: -0.1,
   },
@@ -120,6 +176,8 @@ export const mockJobs: Job[] = [
     status: 'active',
     lastRun: '2023-10-14T23:59:59Z',
     nextRun: '2023-10-15T00:00:00Z',
+    createdBy: 'system',
+    createdAt: '2023-10-01T10:00:00Z',
   },
   {
     id: 'job-2',
@@ -129,15 +187,30 @@ export const mockJobs: Job[] = [
     status: 'active',
     lastRun: '2023-10-14T23:59:59Z',
     nextRun: '2023-10-21T00:00:00Z',
+    createdBy: 'admin',
+    createdAt: '2023-10-02T11:30:00Z',
   },
   {
     id: 'job-3',
     name: 'Monthly Cleanup',
     description: 'Cleanup old logs',
     schedule: '0 0 1 * *',
-    status: 'inactive',
+    status: 'paused',
     lastRun: '2023-09-30T23:59:59Z',
     nextRun: 'N/A',
+    createdBy: 'admin',
+    createdAt: '2023-09-15T09:45:00Z',
+  },
+  {
+    id: 'job-4',
+    name: 'Data Synchronization',
+    description: 'Sync data with external systems',
+    schedule: '0 */4 * * *',
+    status: 'failed',
+    lastRun: '2023-10-14T20:00:00Z',
+    nextRun: '2023-10-15T00:00:00Z',
+    createdBy: 'system',
+    createdAt: '2023-09-20T14:20:00Z',
   },
 ];
 

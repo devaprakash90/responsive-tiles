@@ -19,6 +19,7 @@ export const KPITile: React.FC<KPITileProps> = ({
   data,
   className,
 }) => {
+  // Use the updated properties from our KPI interface
   const { title, value, change, timeframe, icon } = data;
 
   const renderIcon = () => {
@@ -29,6 +30,8 @@ export const KPITile: React.FC<KPITileProps> = ({
         return <BarChart className="h-5 w-5" />;
       case 'trending-up':
         return <TrendingUp className="h-5 w-5" />;
+      case 'trending-down':
+        return <TrendingDown className="h-5 w-5" />;
       default:
         return <AlertCircle className="h-5 w-5" />;
     }

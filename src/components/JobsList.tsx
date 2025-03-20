@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Calendar, 
@@ -74,6 +73,8 @@ export const JobsList: React.FC<JobsListProps> = ({
         return 'bg-amber-50 text-amber-600';
       case 'failed':
         return 'bg-red-50 text-red-600';
+      case 'inactive':
+        return 'bg-muted text-muted-foreground';
       default:
         return 'bg-muted text-muted-foreground';
     }
@@ -86,6 +87,8 @@ export const JobsList: React.FC<JobsListProps> = ({
       case 'paused':
         return <Pause className="h-3.5 w-3.5" />;
       case 'failed':
+        return <AlertCircle className="h-3.5 w-3.5" />;
+      case 'inactive':
         return <AlertCircle className="h-3.5 w-3.5" />;
       default:
         return null;
