@@ -2,7 +2,7 @@
 import React from 'react';
 import PageTransition from '@/components/ui/PageTransition';
 import JobsList from '@/components/JobsList';
-import { mockJobs } from '@/lib/mockData';
+import { mockJobs } from '@/lib/jobData';
 import AppLayout from '@/layouts/AppLayout';
 
 const JobScheduler = () => {

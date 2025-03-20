@@ -12,7 +12,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { Calendar as CalendarIcon, Filter } from 'lucide-react';
-import { mockJobLogs } from '@/lib/mockData';
+import { mockJobLogs } from '@/lib/logData';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';

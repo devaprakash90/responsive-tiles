@@ -18,7 +18,7 @@ import PageTransition from '@/components/ui/PageTransition';
 import BarChart from '@/components/charts/BarChart';
 import LineChart from '@/components/charts/LineChart';
 import PieChart from '@/components/charts/PieChart';
-import { getChartData } from '@/lib/mockData';
+import { getChartData } from '@/lib/chartData';
 import AppLayout from '@/layouts/AppLayout';
 
 const Dashboard = () => {

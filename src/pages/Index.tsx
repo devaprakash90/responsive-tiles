@@ -5,7 +5,7 @@ import { Files, Calendar, BarChart, ClipboardList } from 'lucide-react';
 import PageTransition from '@/components/ui/PageTransition';
 import NavigationTile from '@/components/NavigationTile';
 import KPITile from '@/components/KPITile';
-import { kpiData } from '@/lib/mockData';
+import { kpiData } from '@/lib/kpiData';
 import AppLayout from '@/layouts/AppLayout';
 
 const Index = () => {
