@@ -4,7 +4,7 @@ export interface KPI {
   value: number;
   change: number;
   timeframe: string;
-  icon: 'activity' | 'bar-chart' | 'trending-up' | string;
+  icon: 'activity' | 'bar-chart' | 'trending-up' | 'trending-down' | string;
   
   // Keep the old properties for backward compatibility
   label: string;
@@ -34,33 +34,31 @@ export interface Job {
   createdAt: string;
 }
 
-// Add the getChartData function
+// Add the getChartData function with the correct chart data format
 export const getChartData = () => {
   return {
-    barChart: [
-      { name: 'Mon', value: 120 },
-      { name: 'Tue', value: 90 },
-      { name: 'Wed', value: 150 },
-      { name: 'Thu', value: 85 },
-      { name: 'Fri', value: 110 },
-      { name: 'Sat', value: 70 },
-      { name: 'Sun', value: 60 },
-    ],
-    lineChart: [
-      { name: 'Jan', value: 95 },
-      { name: 'Feb', value: 97 },
-      { name: 'Mar', value: 94 },
-      { name: 'Apr', value: 98 },
-      { name: 'May', value: 99 },
-      { name: 'Jun', value: 96 },
-    ],
-    pieChart: [
-      { name: 'Login', value: 35 },
-      { name: 'Logout', value: 25 },
-      { name: 'API', value: 20 },
-      { name: 'Error', value: 15 },
-      { name: 'Other', value: 5 },
-    ],
+    barChart: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [
+        {
+          name: 'Events',
+          data: [120, 90, 150, 85, 110, 70, 60],
+        },
+      ],
+    },
+    lineChart: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [
+        {
+          name: 'Success Rate',
+          data: [95, 97, 94, 98, 99, 96],
+        },
+      ],
+    },
+    pieChart: {
+      labels: ['Login', 'Logout', 'API', 'Error', 'Other'],
+      data: [35, 25, 20, 15, 5],
+    },
   };
 };
 
@@ -214,7 +212,7 @@ export const mockJobs: Job[] = [
   },
 ];
 
-// Add mockJobLogs data
+// Update mockJobLogs data with system field as requested
 export const mockJobLogs: Log[] = [
   {
     id: "jl-1",
