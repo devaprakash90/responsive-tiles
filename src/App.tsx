@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import LogsViewer from "./pages/LogsViewer";
 import JobScheduler from "./pages/JobScheduler";
 import Dashboard from "./pages/Dashboard";
+import JobLogsHistory from "./pages/JobLogsHistory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/logs" element={<LogsViewer />} />
           <Route path="/jobs" element={<JobScheduler />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/job-logs" element={<JobLogsHistory />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

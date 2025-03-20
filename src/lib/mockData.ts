@@ -1,7 +1,11 @@
+export interface KPI {
+  id: string;
+  label: string;
+  value: number;
+  trend: 'up' | 'down' | 'stable';
+  trendValue: number;
+}
 
-// Mock data for development purposes
-
-// Types
 export interface Log {
   id: string;
   timestamp: string;
@@ -9,152 +13,208 @@ export interface Log {
   userId: string;
   status: 'success' | 'warning' | 'error' | 'info';
   message: string;
-  details?: Record<string, any>;
+  details: any;
 }
 
 export interface Job {
   id: string;
   name: string;
+  description: string;
   schedule: string;
-  status: 'active' | 'paused' | 'failed';
-  lastRun?: string;
-  nextRun?: string;
-  createdAt: string;
-  createdBy: string;
-  description?: string;
+  status: 'active' | 'inactive';
+  lastRun: string;
+  nextRun: string;
 }
 
-export interface KPI {
-  id: string;
-  title: string;
-  value: number;
-  change: number;
-  timeframe: string;
-  icon: string;
-}
-
-// Generate a random timestamp within the last 30 days
-const randomRecentDate = () => {
-  const now = new Date();
-  const daysAgo = Math.floor(Math.random() * 30);
-  const hoursAgo = Math.floor(Math.random() * 24);
-  const minutesAgo = Math.floor(Math.random() * 60);
-  
-  const date = new Date(now);
-  date.setDate(date.getDate() - daysAgo);
-  date.setHours(date.getHours() - hoursAgo);
-  date.setMinutes(date.getMinutes() - minutesAgo);
-  
-  return date.toISOString();
-};
-
-// Generate random logs
-export const generateLogs = (count: number): Log[] => {
-  const eventTypes = ['login', 'logout', 'data_access', 'file_upload', 'api_request', 'error', 'system_event'];
-  const statuses = ['success', 'warning', 'error', 'info'] as const;
-  const userIds = Array.from({ length: 10 }, (_, i) => `user-${i + 1}`);
-  
-  return Array.from({ length: count }, (_, i) => ({
-    id: `log-${i + 1}`,
-    timestamp: randomRecentDate(),
-    eventType: eventTypes[Math.floor(Math.random() * eventTypes.length)],
-    userId: userIds[Math.floor(Math.random() * userIds.length)],
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    message: `Event ${eventTypes[Math.floor(Math.random() * eventTypes.length)]} occurred.`,
-    details: {
-      ip: `192.168.1.${Math.floor(Math.random() * 255)}`,
-      browser: ['Chrome', 'Firefox', 'Safari', 'Edge'][Math.floor(Math.random() * 4)]
-    }
-  }));
-};
-
-// Generate random jobs
-export const generateJobs = (count: number): Job[] => {
-  const schedules = ['0 */2 * * *', '0 0 * * *', '*/15 * * * *', '0 0 * * 1'];
-  const statuses = ['active', 'paused', 'failed'] as const;
-  const users = ['admin', 'system', 'scheduler', 'api'];
-  
-  return Array.from({ length: count }, (_, i) => {
-    const createdDate = randomRecentDate();
-    const lastRun = Math.random() > 0.3 ? randomRecentDate() : undefined;
-    
-    return {
-      id: `job-${i + 1}`,
-      name: `Job ${i + 1}`,
-      schedule: schedules[Math.floor(Math.random() * schedules.length)],
-      status: statuses[Math.floor(Math.random() * statuses.length)],
-      lastRun,
-      nextRun: lastRun ? new Date(new Date(lastRun).getTime() + 24 * 60 * 60 * 1000).toISOString() : undefined,
-      createdAt: createdDate,
-      createdBy: users[Math.floor(Math.random() * users.length)],
-      description: Math.random() > 0.5 ? `Scheduled task for processing data batch ${i + 1}` : undefined
-    };
-  });
-};
-
-// KPI data
 export const kpiData: KPI[] = [
   {
     id: 'kpi-1',
-    title: 'Events Today',
-    value: 148,
-    change: 12,
-    timeframe: 'vs. yesterday',
-    icon: 'activity'
+    label: 'Total Events',
+    value: 12345,
+    trend: 'up',
+    trendValue: 12,
   },
   {
     id: 'kpi-2',
-    title: 'Events This Week',
-    value: 847,
-    change: -3,
-    timeframe: 'vs. last week',
-    icon: 'bar-chart'
+    label: 'Unique Users',
+    value: 500,
+    trend: 'stable',
+    trendValue: 0,
   },
   {
     id: 'kpi-3',
-    title: 'Events This Month',
-    value: 3259,
-    change: 23,
-    timeframe: 'vs. last month',
-    icon: 'trending-up'
-  }
+    label: 'Error Rate',
+    value: 0.5,
+    trend: 'down',
+    trendValue: -0.1,
+  },
 ];
 
-// Chart data for dashboard
-export const getChartData = () => {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const eventTypes = ['Login', 'Logout', 'Data Access', 'File Upload', 'API Request', 'Error', 'System Event'];
-  
-  return {
-    barChart: {
-      labels: days,
-      datasets: [
-        {
-          name: 'Events',
-          data: days.map(() => Math.floor(Math.random() * 100) + 50)
-        }
-      ]
+export const mockLogs: Log[] = [
+  {
+    id: 'log-1',
+    timestamp: '2023-10-15T12:34:56Z',
+    eventType: 'USER_LOGIN',
+    userId: 'user123',
+    status: 'success',
+    message: 'User logged in successfully',
+    details: {
+      ipAddress: '192.168.1.1',
+      userAgent: 'Mozilla/5.0',
     },
-    lineChart: {
-      labels: days,
-      datasets: [
-        {
-          name: 'Successful',
-          data: days.map(() => Math.floor(Math.random() * 100) + 50)
-        },
-        {
-          name: 'Failed',
-          data: days.map(() => Math.floor(Math.random() * 30) + 5)
-        }
-      ]
+  },
+  {
+    id: 'log-2',
+    timestamp: '2023-10-15T12:35:10Z',
+    eventType: 'DATA_ACCESS',
+    userId: 'user456',
+    status: 'info',
+    message: 'User accessed sensitive data',
+    details: {
+      fileId: 'file001',
+      accessType: 'read',
     },
-    pieChart: {
-      labels: eventTypes,
-      data: eventTypes.map(() => Math.floor(Math.random() * 100) + 10)
-    }
-  };
-};
+  },
+  {
+    id: 'log-3',
+    timestamp: '2023-10-15T12:36:00Z',
+    eventType: 'SYSTEM_ERROR',
+    userId: 'system',
+    status: 'error',
+    message: 'Failed to connect to database',
+    details: {
+      errorCode: '500',
+      errorMessage: 'Connection timeout',
+    },
+  },
+  {
+    id: 'log-4',
+    timestamp: '2023-10-15T12:37:00Z',
+    eventType: 'USER_LOGOUT',
+    userId: 'user123',
+    status: 'success',
+    message: 'User logged out',
+    details: {
+      sessionDuration: '3600',
+    },
+  },
+  {
+    id: 'log-5',
+    timestamp: '2023-10-15T12:38:00Z',
+    eventType: 'WARNING',
+    userId: 'system',
+    status: 'warning',
+    message: 'High CPU usage detected',
+    details: {
+      cpuUsage: '95%',
+    },
+  },
+];
 
-// Generate initial data
-export const mockLogs = generateLogs(200);
-export const mockJobs = generateJobs(12);
+export const mockJobs: Job[] = [
+  {
+    id: 'job-1',
+    name: 'Daily Backup',
+    description: 'Backup all databases',
+    schedule: '0 0 * * *',
+    status: 'active',
+    lastRun: '2023-10-14T23:59:59Z',
+    nextRun: '2023-10-15T00:00:00Z',
+  },
+  {
+    id: 'job-2',
+    name: 'Weekly Report',
+    description: 'Generate weekly report',
+    schedule: '0 0 * * 0',
+    status: 'active',
+    lastRun: '2023-10-14T23:59:59Z',
+    nextRun: '2023-10-21T00:00:00Z',
+  },
+  {
+    id: 'job-3',
+    name: 'Monthly Cleanup',
+    description: 'Cleanup old logs',
+    schedule: '0 0 1 * *',
+    status: 'inactive',
+    lastRun: '2023-09-30T23:59:59Z',
+    nextRun: 'N/A',
+  },
+];
+
+// Add mockJobLogs data
+export const mockJobLogs: Log[] = [
+  {
+    id: "jl-1",
+    timestamp: "2023-10-15T14:30:00Z",
+    eventType: "REPORT_GENERATION",
+    userId: "system",
+    status: "success",
+    message: "Daily report generation completed successfully",
+    details: {
+      jobId: "job-1",
+      duration: "120s",
+      records: 1250,
+      system: "reporting"
+    }
+  },
+  {
+    id: "jl-2",
+    timestamp: "2023-10-15T02:00:00Z",
+    eventType: "DATA_BACKUP",
+    userId: "system",
+    status: "success",
+    message: "Daily backup completed",
+    details: {
+      jobId: "job-2",
+      duration: "540s",
+      size: "2.3GB",
+      system: "data"
+    }
+  },
+  {
+    id: "jl-3",
+    timestamp: "2023-10-14T22:00:00Z",
+    eventType: "USER_SYNC",
+    userId: "system",
+    status: "warning",
+    message: "User synchronization completed with warnings",
+    details: {
+      jobId: "job-3",
+      duration: "45s",
+      users: 1203,
+      warnings: 3,
+      system: "auth"
+    }
+  },
+  {
+    id: "jl-4",
+    timestamp: "2023-10-14T18:00:00Z",
+    eventType: "LOG_CLEANUP",
+    userId: "system",
+    status: "error",
+    message: "Failed to clean up old logs",
+    details: {
+      jobId: "job-4",
+      error: "Database connection timeout",
+      system: "data"
+    }
+  },
+  {
+    id: "jl-5",
+    timestamp: "2023-10-14T12:00:00Z",
+    eventType: "SYSTEM_HEALTH_CHECK",
+    userId: "system",
+    status: "info",
+    message: "System health check completed",
+    details: {
+      jobId: "job-5",
+      duration: "30s",
+      services: {
+        database: "healthy",
+        api: "healthy",
+        cache: "degraded"
+      },
+      system: "reporting"
+    }
+  }
+];
